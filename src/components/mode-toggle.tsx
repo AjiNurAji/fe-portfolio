@@ -1,37 +1,27 @@
-import { Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/theme-provider";
 
 export function ModeToggle() {
-	const { setTheme } = useTheme();
+	const { setTheme, theme } = useTheme();
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button variant="outline" size="icon">
-					<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-					<Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-					<span className="sr-only">Toggle theme</span>
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
-				<DropdownMenuItem onClick={() => setTheme("light")}>
-					Light
-				</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("dark")}>
-					Dark
-				</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("system")}>
-					System
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+		<Button variant="ghost" size="icon" onClick={() => {
+			if (theme === "light") {
+				setTheme("dark");
+			} else if (theme === "dark") {
+				setTheme("system")
+			} else if (theme === "system") {
+				setTheme("light")
+			} else {
+				setTheme("system")
+			}
+		}}>
+			<Sun className={`h-[1.2rem] w-[1.2rem] transition-all duration-700 ease-in-out ${theme === "light" ? "rotate-[360deg] opacity-100" : "rotate-0 opacity-0"}`} />
+			<Moon className={`absolute h-[1.2rem] w-[1.2rem] transition-all duration-700 ease-in-out ${theme === "dark" ? "rotate-[360deg] opacity-100" : "rotate-0 opacity-0"}`} />
+			<Monitor className={`absolute h-[1.2rem] w-[1.2rem] transition-all duration-700 ease-in-out ${theme === "system" ? "rotate-[360deg] opacity-100" : "rotate-0 opacity-0"}`} />
+			<span className="sr-only">Toggle theme</span>
+		</Button>
 	);
 }

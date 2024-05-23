@@ -1,15 +1,18 @@
-import { ModeToggle } from "./components/mode-toggle";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./components/theme-provider";
+import Home from "./pages/client/home";
+import Dashboard from "./pages/admin/dashboard";
+import "./App.css"
 
 const App = () => {
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-			<div className="flex flex-col justify-center items-center h-screen">
-				HELLO VITE FROM TYPESCRIPT
-				<div className="mt-5">
-					<ModeToggle />
-				</div>
-			</div>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/admin/dashboard" element={<Dashboard />} />
+				</Routes>
+			</BrowserRouter>
 		</ThemeProvider>
 	);
 };
